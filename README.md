@@ -1,4 +1,5 @@
-Sabores del Jardín
+SABORES DEL JARDIN
+
 Sabores del Jardín es una plataforma e-commerce moderna para la venta de productos gastronómicos y artesanales de Tucumán. El proyecto incluye un backend robusto con Django y DRF, y un frontend profesional desarrollado con Next.js, Tailwind CSS y TypeScript.
 
 -----------------------------------------------
