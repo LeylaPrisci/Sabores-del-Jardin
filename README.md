@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Sabores del Jardín
+Sabores del Jardín es una plataforma e-commerce moderna para la venta de productos gastronómicos y artesanales de Tucumán. El proyecto incluye un backend robusto con Django y DRF, y un frontend profesional desarrollado con Next.js, Tailwind CSS y TypeScript.
 
-## Getting Started
+-----------------------------------------------
 
-First, run the development server:
+Características
+Autenticación segura con JWT
+Catálogo de productos gastronómicos y artesanales
+Diseño responsivo y visual atractivo
+Integración de redes sociales
+Suscripción por email
+Experiencia optimizada para productores y clientes locales
 
-```bash
+-------------------------------------------------
+
+Tecnologías
+Backend: Django, Django REST Framework, PostgreSQL, JWT
+Frontend: Next.js, Tailwind CSS, TypeScript
+
+Instalación
+
+------------------------------------------------
+
+Backend
+cd Backend/sabores-del-jardin
+python -m venv venv
+source venv/bin/activate  # En Windows: venv\\Scripts\\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+
+---------------------------------------------
+
+Frontend
+cd Frontend/sabores-del-jardin
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-------------------------------------------
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Uso
+Accede a la web en http://localhost:3000 para explorar productos, registrarte y realizar compras.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+-------------------------------------------
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Sabores del Jardín — Lo mejor de Tucumán, directo a tu mesa.
