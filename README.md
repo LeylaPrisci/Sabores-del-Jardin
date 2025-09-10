@@ -4,7 +4,7 @@ Sabores del Jardín es una plataforma e-commerce moderna para la venta de produc
 
 -----------------------------------------------
 
-Características
+CARACTERISTICAS
 Autenticación segura con JWT
 Catálogo de productos gastronómicos y artesanales
 Diseño responsivo y visual atractivo
@@ -14,15 +14,15 @@ Experiencia optimizada para productores y clientes locales
 
 -------------------------------------------------
 
-Tecnologías
+TECNOLOGÍAS
 Backend: Django, Django REST Framework, PostgreSQL, JWT
 Frontend: Next.js, Tailwind CSS, TypeScript
 
-Instalación
+INSTALACIÓN
 
 ------------------------------------------------
 
-Backend
+BACKEND
 cd Backend/sabores-del-jardin
 python -m venv venv
 source venv/bin/activate  # En Windows: venv\\Scripts\\activate
@@ -32,14 +32,14 @@ python manage.py runserver
 
 ---------------------------------------------
 
-Frontend
+FRONTEND
 cd Frontend/sabores-del-jardin
 npm install
 npm run dev
 
 -------------------------------------------
 
-Uso
+USO
 Accede a la web en http://localhost:3000 para explorar productos, registrarte y realizar compras.
 
 -------------------------------------------
