@@ -1,5 +1,7 @@
 import React from 'react';
 import Footer from './Footer';
+import CartDrawer from './CartDrawer';
+import { CartButton } from './CartComponents';
 import {
   Disclosure,
   DisclosureButton,
@@ -33,9 +35,10 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-const MainLayout: React.FC<{ children: React.ReactNode; title?: string }> = ({ children, title = 'Sabores del Jardín' }) => (
-  <div className="min-h-full">
-    <Disclosure as="nav" className="bg-green-900/80">
+const MainLayout: React.FC<{ children: React.ReactNode; title?: string }> = ({ children, title = 'Sabores del Jardín' }) => {
+  return (
+    <div className="min-h-full">
+      <Disclosure as="nav" className="bg-green-900/80">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
@@ -68,6 +71,8 @@ const MainLayout: React.FC<{ children: React.ReactNode; title?: string }> = ({ c
           </div>
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
+              {/* Cart Icon */}
+              <CartButton className="relative rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-green-500 mr-2" />
               <button
                 type="button"
                 className="relative rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-green-500"
@@ -177,7 +182,11 @@ const MainLayout: React.FC<{ children: React.ReactNode; title?: string }> = ({ c
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">{children}</div>
     </main>
     <Footer />
+    
+    {/* Cart Drawer */}
+    <CartDrawer />
   </div>
-);
+  );
+};
 
 export default MainLayout;
