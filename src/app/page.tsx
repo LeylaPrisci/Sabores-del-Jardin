@@ -2,8 +2,112 @@
 "use client";
 import MainLayout from '../components/MainLayout';
 import Button from '../components/Button';
+import { CartButton, CartCounter, CartTotal, useAddToCart } from '../components/CartComponents';
 
 export default function Home() {
+  const { addToCartWithFeedback } = useAddToCart();
+
+  // Productos que componen el pack de degustación
+  const productosDelPack = [
+    {
+      id: 7,
+      nombre: "Alfajores Caseros",
+      descripcion: "Alfajores artesanales con dulce de leche",
+      precio: 4500,
+      imagen: "/productos/alfajor.png",
+      categoria: "Gastronómicas"
+    },
+    {
+      id: 6,
+      nombre: "Vino Patero",
+      descripcion: "Vino artesanal de uva criolla",
+      precio: 5000,
+      imagen: "/productos/vino.png",
+      categoria: "Bebidas"
+    },
+    {
+      id: 8,
+      nombre: "Cerveza Artesanal",
+      descripcion: "Cerveza local elaborada con ingredientes regionales",
+      precio: 3600,
+      imagen: "/productos/cerveza.png",
+      categoria: "Bebidas"
+    },
+    {
+      id: 3,
+      nombre: "Quesillo de Cabra",
+      descripcion: "Queso artesanal de cabra de los valles",
+      precio: 10000,
+      imagen: "/productos/queso.png",
+      categoria: "Gastronómicas"
+    }
+  ];
+
+  // Calcular precio total y precio con descuento del 25%
+  const precioTotalOriginal = productosDelPack.reduce((total, producto) => total + producto.precio, 0);
+  const precioConDescuento = Math.round(precioTotalOriginal * 0.75); // 25% de descuento
+  const ahorroTotal = precioTotalOriginal - precioConDescuento;
+
+  // Productos favoritos del jardín
+  const productosFavoritos = [
+    {
+      id: 101,
+      nombre: 'Miel de Caña',
+      descripcion: 'Miel pura de caña artesanal',
+      precio: 3000,
+      imagen: '/productos/miel.png',
+      categoria: 'Gastronómicas'
+    },
+    {
+      id: 102,
+      nombre: 'Quesillo Artesanal',
+      descripcion: 'Quesillo artesanal de Tucumán',
+      precio: 9000,
+      imagen: '/productos/queso.png',
+      categoria: 'Gastronómicas'
+    },
+    {
+      id: 103,
+      nombre: 'Cerámica Decorativa',
+      descripcion: 'Cerámica decorativa hecha a mano',
+      precio: 25000,
+      imagen: '/productos/ceramica.png',
+      categoria: 'Artesanías'
+    },
+    {
+      id: 104,
+      nombre: 'Vino Regional',
+      descripcion: 'Vino regional de alta calidad',
+      precio: 8000,
+      imagen: '/productos/vino.png',
+      categoria: 'Bebidas'
+    }
+  ];
+
+  const handleAddPackDegustacion = () => {
+    // Calcular el precio proporcional con descuento para cada producto
+    const factorDescuento = 0.75; // 25% de descuento = 75% del precio original
+    
+    // Crear productos con precios promocionales y IDs únicos para el pack
+    const productosConDescuento = productosDelPack.map((producto, index) => ({
+      ...producto,
+      id: producto.id + 1000, // ID único para productos del pack (ej: 1007, 1006, 1008, 1003)
+      precio: Math.round(producto.precio * factorDescuento), // Aplicar 25% de descuento a cada producto
+      categoria: "🎁 Pack Degustación", // Cambiar categoría para identificar que es parte del pack
+      nombre: `${producto.nombre} (Pack)` // Agregar indicador en el nombre
+    }));
+    
+    // Agregar cada producto con precio promocional al carrito
+    productosConDescuento.forEach((producto) => {
+      addToCartWithFeedback(producto, false); // No abrir carrito en cada producto
+    });
+    
+    // Abrir el carrito después de agregar todos los productos
+    setTimeout(() => {
+      addToCartWithFeedback(productosConDescuento[0], true); // Solo para abrir el carrito
+    }, 100);
+  };
+
   return (
     <MainLayout title="Sabores del Jardín">
       <div className="bg-white">
@@ -52,50 +156,22 @@ export default function Home() {
         <section className="max-w-7xl mx-auto mb-12 px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-[#009D71] mb-6">Los Favoritos del Jardín</h2>
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-            {[
-              {
-                id: 1,
-                name: 'Miel de Caña',
-                href: '#',
-                price: '$1200',
-                imageSrc: '/productos/miel.png',
-                imageAlt: 'Frasco de miel de caña artesanal.',
-              },
-              {
-                id: 2,
-                name: 'Quesillo Artesanal',
-                href: '#',
-                price: '$900',
-                imageSrc: '/productos/queso.png',
-                imageAlt: 'Quesillo artesanal de Tucumán.',
-              },
-              {
-                id: 3,
-                name: 'Cerámica Decorativa',
-                href: '#',
-                price: '$2500',
-                imageSrc: '/productos/ceramica.png',
-                imageAlt: 'Cerámica decorativa hecha a mano.',
-              },
-              {
-                id: 4,
-                name: 'Vino Regional',
-                href: '#',
-                price: '$1800',
-                imageSrc: '/productos/vino.png',
-                imageAlt: 'Botella de vino regional.',
-              },
-            ].map((product) => (
-              <a key={product.id} href={product.href} className="group border-2 border-[#E8C39E] rounded-lg shadow p-4 flex flex-col items-center bg-transparent transition hover:scale-[1.03]">
+            {productosFavoritos.map((producto) => (
+              <div key={producto.id} className="group border-2 border-[#E8C39E] rounded-lg shadow p-4 flex flex-col items-center bg-transparent transition hover:scale-[1.03]">
                 <img
-                  alt={product.imageAlt}
-                  src={product.imageSrc}
+                  alt={producto.descripcion}
+                  src={producto.imagen}
                   className="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8 mb-2"
                 />
-                <h3 className="mt-2 text-base font-semibold text-[#009D71]">{product.name}</h3>
-                <p className="mt-1 text-lg font-bold text-[#808080]">{product.price}</p>
-                <Button className="bg-[#009D71] text-white hover:bg-[#00805a] mt-2">Agregar al carrito</Button>
-              </a>
+                <h3 className="mt-2 text-base font-semibold text-[#009D71]">{producto.nombre}</h3>
+                <p className="mt-1 text-lg font-bold text-[#808080]">${producto.precio.toLocaleString()}</p>
+                <Button 
+                  className="bg-[#009D71] text-white hover:bg-[#00805a] mt-2"
+                  onClick={() => addToCartWithFeedback(producto, true)}
+                >
+                  Agregar al carrito
+                </Button>
+              </div>
             ))}
           </div>
         </section>
@@ -116,6 +192,64 @@ export default function Home() {
               <img src="/logo/truck(1).svg" alt="Directo a tu Hogar" className="w-14 h-14 mb-2" />
               <h3 className="text-lg font-semibold text-[#009D71] mb-1">Directo a tu Hogar</h3>
               <p className="text-[#808080] mb-2">Llevamos lo mejor de Tucumán a todo el país.</p>
+            </div>
+          </div>
+        </section>
+        
+        {/* Sección de demostración del carrito */}
+        <section className="max-w-4xl mx-auto mb-12 bg-gradient-to-r from-[#E8C39E]/20 to-[#009D71]/20 rounded-xl p-8">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-[#009D71] mb-4">¿Ya tienes productos en tu carrito?</h2>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
+              <div className="flex items-center gap-2">
+                <span className="text-gray-600">Productos en carrito:</span>
+                <CartCounter className="text-[#009D71] font-semibold" showZero={true} />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-gray-600">Total:</span>
+                <CartTotal className="text-[#009D71] font-bold text-xl" />
+              </div>
+            </div>
+            
+            {/* Información del Pack de Degustación */}
+            <div className="bg-white rounded-lg p-6 mb-6 border-2 border-[#E8C39E]">
+              <h3 className="text-xl font-bold text-[#009D71] mb-3">🎁 Pack Degustación Tucumana</h3>
+              <p className="text-gray-600 mb-4">Incluye los mejores sabores de nuestra región:</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4 text-sm">
+                {productosDelPack.map((producto) => (
+                  <div key={producto.id} className="flex flex-col items-center">
+                    <img src={producto.imagen} alt={producto.nombre} className="w-12 h-12 object-cover rounded-lg mb-1" />
+                    <span className="text-center font-medium text-gray-700">{producto.nombre}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="text-center">
+                <p className="text-gray-500 text-sm mb-2">
+                  Precio individual: <span className="line-through">${precioTotalOriginal.toLocaleString()}</span>
+                </p>
+                <p className="text-[#009D71] font-bold text-lg mb-1">
+                  Precio del pack: ${precioConDescuento.toLocaleString()}
+                </p>
+                <p className="text-green-600 font-semibold text-sm">
+                  ¡Ahorrás ${ahorroTotal.toLocaleString()}! (25% OFF)
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+              <CartButton 
+                className="bg-[#009D71] text-white px-6 py-3 rounded-lg hover:bg-[#00805a] transition-colors flex items-center gap-2"
+                showBadge={false}
+              >
+                <span>Ver Carrito</span>
+              </CartButton>
+              
+              <Button 
+                className="bg-[#E8C39E] text-[#009D71] px-6 py-3 hover:bg-[#ddb589] font-semibold"
+                onClick={handleAddPackDegustacion}
+              >
+                Agregar Pack Degustación (${precioConDescuento.toLocaleString()})
+              </Button>
             </div>
           </div>
         </section>
