@@ -7,7 +7,6 @@ import { CartButton, CartCounter, CartTotal, useAddToCart } from '../components/
 export default function Home() {
   const { addToCartWithFeedback } = useAddToCart();
 
-  // Productos que componen el pack de degustación
   const productosDelPack = [
     {
       id: 7,
@@ -45,7 +44,7 @@ export default function Home() {
 
   // Calcular precio total y precio con descuento del 25%
   const precioTotalOriginal = productosDelPack.reduce((total, producto) => total + producto.precio, 0);
-  const precioConDescuento = Math.round(precioTotalOriginal * 0.75); // 25% de descuento
+  const precioConDescuento = Math.round(precioTotalOriginal * 0.75);
   const ahorroTotal = precioTotalOriginal - precioConDescuento;
 
   // Productos favoritos del jardín
@@ -85,26 +84,23 @@ export default function Home() {
   ];
 
   const handleAddPackDegustacion = () => {
-    // Calcular el precio proporcional con descuento para cada producto
-    const factorDescuento = 0.75; // 25% de descuento = 75% del precio original
+    const factorDescuento = 0.75; 
     
     // Crear productos con precios promocionales y IDs únicos para el pack
     const productosConDescuento = productosDelPack.map((producto, index) => ({
       ...producto,
-      id: producto.id + 1000, // ID único para productos del pack (ej: 1007, 1006, 1008, 1003)
-      precio: Math.round(producto.precio * factorDescuento), // Aplicar 25% de descuento a cada producto
-      categoria: "🎁 Pack Degustación", // Cambiar categoría para identificar que es parte del pack
-      nombre: `${producto.nombre} (Pack)` // Agregar indicador en el nombre
+      id: producto.id + 1000,
+      precio: Math.round(producto.precio * factorDescuento),
+      categoria: "🎁 Pack Degustación",
+      nombre: `${producto.nombre} (Pack)`
     }));
     
-    // Agregar cada producto con precio promocional al carrito
     productosConDescuento.forEach((producto) => {
-      addToCartWithFeedback(producto, false); // No abrir carrito en cada producto
+      addToCartWithFeedback(producto, false);
     });
-    
-    // Abrir el carrito después de agregar todos los productos
+     
     setTimeout(() => {
-      addToCartWithFeedback(productosConDescuento[0], true); // Solo para abrir el carrito
+      addToCartWithFeedback(productosConDescuento[0], true); 
     }, 100);
   };
 
@@ -196,7 +192,6 @@ export default function Home() {
           </div>
         </section>
         
-        {/* Sección de demostración del carrito */}
         <section className="max-w-4xl mx-auto mb-12 bg-gradient-to-r from-[#E8C39E]/20 to-[#009D71]/20 rounded-xl p-8">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-[#009D71] mb-4">¿Ya tienes productos en tu carrito?</h2>
@@ -210,8 +205,7 @@ export default function Home() {
                 <CartTotal className="text-[#009D71] font-bold text-xl" />
               </div>
             </div>
-            
-            {/* Información del Pack de Degustación */}
+
             <div className="bg-white rounded-lg p-6 mb-6 border-2 border-[#E8C39E]">
               <h3 className="text-xl font-bold text-[#009D71] mb-3">🎁 Pack Degustación Tucumana</h3>
               <p className="text-gray-600 mb-4">Incluye los mejores sabores de nuestra región:</p>
