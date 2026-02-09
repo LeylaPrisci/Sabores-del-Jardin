@@ -1,4 +1,9 @@
 import React from 'react';
+import Image from "next/image";
+import LogoutModal from './LogoutModal';
+import { useLogoutModal } from './useLogoutModal';
+import LoginModal from './LoginModal';
+import { useLoginModal } from './useLoginModal';
 import Footer from './Footer';
 import CartDrawer from './CartDrawer';
 import { CartButton } from './CartComponents';
@@ -25,10 +30,15 @@ const navigation = [
   { name: 'Nuestra Historia', href: '/nosotros', current: false },
   { name: 'Contacto', href: '/contacto', current: false },
 ];
+// Simulación de autenticación
+const isLoggedIn = false; // Cambia a true para probar logueado
+
 const userNavigation = [
   { name: 'Perfil', href: '/cuenta' },
-  { name: 'Configuración', href: '/cuenta/configuracion' },
-  { name: 'Cerrar sesión', href: '/logout' },
+  { name: 'Consultas', href: '/cuenta/consultas' },
+  ...(isLoggedIn
+    ? [{ name: 'Cerrar sesión', href: '#' }]
+    : [{ name: 'Iniciar sesión', href: '#' }]),
 ];
 
 function classNames(...classes: string[]) {
@@ -36,17 +46,23 @@ function classNames(...classes: string[]) {
 }
 
 const MainLayout: React.FC<{ children: React.ReactNode; title?: string }> = ({ children, title = 'Sabores del Jardín' }) => {
+  const logoutModal = useLogoutModal();
+  const loginModal = useLoginModal();
   return (
     <div className="min-h-full">
+      <LogoutModal open={logoutModal.open} onClose={logoutModal.hide} />
+      <LoginModal open={loginModal.open} onClose={loginModal.hide} />
       <Disclosure as="nav" className="bg-green-900/80">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <div className="shrink-0">
-              <img
+              <Image
                 alt="Sabores del Jardín"
                 src="/logo/logoSinFondo.png"
                 className="size-8"
+                width={32}
+                height={32}
               />
             </div>
             <div className="hidden md:block">
@@ -85,10 +101,12 @@ const MainLayout: React.FC<{ children: React.ReactNode; title?: string }> = ({ c
                 <MenuButton className="relative flex max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Abrir menú de usuario</span>
-                  <img
+                  <Image
                     alt=""
                     src={user.imageUrl}
                     className="size-8 rounded-full outline -outline-offset-1 outline-white/10"
+                    width={32}
+                    height={32}
                   />
                 </MenuButton>
                 <MenuItems
@@ -97,12 +115,30 @@ const MainLayout: React.FC<{ children: React.ReactNode; title?: string }> = ({ c
                 >
                   {userNavigation.map((item) => (
                     <MenuItem key={item.name}>
-                      <a
-                        href={item.href}
-                        className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
-                      >
-                        {item.name}
-                      </a>
+                      {item.name === 'Cerrar sesión' ? (
+                        <button
+                          type="button"
+                          onClick={logoutModal.show}
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                        >
+                          {item.name}
+                        </button>
+                      ) : item.name === 'Iniciar sesión' ? (
+                        <button
+                          type="button"
+                          onClick={loginModal.show}
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                        >
+                          {item.name}
+                        </button>
+                      ) : (
+                        <a
+                          href={item.href}
+                          className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                        >
+                          {item.name}
+                        </a>
+                      )}
                     </MenuItem>
                   ))}
                 </MenuItems>
@@ -139,10 +175,12 @@ const MainLayout: React.FC<{ children: React.ReactNode; title?: string }> = ({ c
         <div className="border-t border-white/10 pt-4 pb-3">
           <div className="flex items-center px-5">
             <div className="shrink-0">
-              <img
+              <Image
                 alt=""
                 src={user.imageUrl}
                 className="size-10 rounded-full outline -outline-offset-1 outline-white/10"
+                width={40}
+                height={40}
               />
             </div>
             <div className="ml-3">
@@ -160,14 +198,36 @@ const MainLayout: React.FC<{ children: React.ReactNode; title?: string }> = ({ c
           </div>
           <div className="mt-3 space-y-1 px-2">
             {userNavigation.map((item) => (
-              <DisclosureButton
-                key={item.name}
-                as="a"
-                href={item.href}
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
-              >
-                {item.name}
-              </DisclosureButton>
+              item.name === 'Cerrar sesión' ? (
+                <DisclosureButton
+                  key={item.name}
+                  as="button"
+                  type="button"
+                  onClick={logoutModal.show}
+                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white w-full text-left"
+                >
+                  {item.name}
+                </DisclosureButton>
+              ) : item.name === 'Iniciar sesión' ? (
+                <DisclosureButton
+                  key={item.name}
+                  as="button"
+                  type="button"
+                  onClick={loginModal.show}
+                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white w-full text-left"
+                >
+                  {item.name}
+                </DisclosureButton>
+              ) : (
+                <DisclosureButton
+                  key={item.name}
+                  as="a"
+                  href={item.href}
+                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
+                >
+                  {item.name}
+                </DisclosureButton>
+              )
             ))}
           </div>
         </div>

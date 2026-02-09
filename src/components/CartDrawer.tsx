@@ -1,10 +1,13 @@
 "use client";
 import React from 'react';
+import Image from 'next/image';
 import { useCart } from '../context/CartContext';
 import Button from './Button';
 
 const CartDrawer: React.FC = () => {
   const { items, removeItem, updateQuantity, clearCart, totalPrice, isCartOpen, closeCart } = useCart();
+
+  // El modal solo muestra el carrito y redirige a /checkout
 
   if (!isCartOpen) return null;
 
@@ -16,7 +19,6 @@ const CartDrawer: React.FC = () => {
           onClick={closeCart}
         />
       )}
-      
       <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
         isCartOpen ? 'translate-x-0' : 'translate-x-full'
       }`}>
@@ -38,10 +40,7 @@ const CartDrawer: React.FC = () => {
             </svg>
           </button>
         </div>
-
-        {/* Content */}
         <div className="flex flex-col h-full bg-white">
-          {/* Items List */}
           <div className="flex-1 overflow-y-auto p-4">
             {items.length === 0 ? (
               <div className="text-center py-8">
@@ -66,9 +65,11 @@ const CartDrawer: React.FC = () => {
               <div className="space-y-4">
                 {items.map((item) => (
                   <div key={item.id} className="flex items-start space-x-3 p-3 border border-gray-200 rounded-lg">
-                    <img
+                    <Image
                       src={item.imagen}
                       alt={item.nombre}
+                      width={48}
+                      height={48}
                       className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
@@ -104,7 +105,6 @@ const CartDrawer: React.FC = () => {
               </div>
             )}
           </div>
-
           {/* Footer */}
           {items.length > 0 && (
             <div className="border-t border-gray-200 bg-white px-4 pt-4 pb-8 space-y-4 flex-shrink-0">
@@ -112,9 +112,17 @@ const CartDrawer: React.FC = () => {
                 <span className="font-semibold text-gray-900">Total:</span>
                 <span className="font-bold text-[#009D71] text-lg">${totalPrice.toFixed(2)}</span>
               </div>
-              
               <div className="space-y-3">
-                <Button className="w-full bg-[#009D71] text-white hover:bg-[#00805a] py-3 text-sm font-semibold rounded-lg">
+                <Button
+                  className="w-full bg-[#009D71] text-white hover:bg-[#00805a] py-3 text-sm font-semibold rounded-lg"
+                  onClick={() => {
+                    // Guardar carrito y total en localStorage antes de redirigir
+                    localStorage.setItem('checkout_items', JSON.stringify(items));
+                    localStorage.setItem('checkout_total', JSON.stringify(totalPrice));
+                    closeCart();
+                    window.location.href = '/checkout';
+                  }}
+                >
                   Finalizar Compra
                 </Button>
                 <button

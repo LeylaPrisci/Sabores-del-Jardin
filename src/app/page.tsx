@@ -1,5 +1,6 @@
 
 "use client";
+import Image from "next/image";
 import MainLayout from '../components/MainLayout';
 import Button from '../components/Button';
 import { CartButton, CartCounter, CartTotal, useAddToCart } from '../components/CartComponents';
@@ -89,7 +90,7 @@ export default function Home() {
     const factorDescuento = 0.75; // 25% de descuento = 75% del precio original
     
     // Crear productos con precios promocionales y IDs únicos para el pack
-    const productosConDescuento = productosDelPack.map((producto, index) => ({
+    const productosConDescuento = productosDelPack.map((producto) => ({
       ...producto,
       id: producto.id + 1000, // ID único para productos del pack (ej: 1007, 1006, 1008, 1003)
       precio: Math.round(producto.precio * factorDescuento), // Aplicar 25% de descuento a cada producto
@@ -112,11 +113,14 @@ export default function Home() {
     <MainLayout title="Sabores del Jardín">
       <div className="bg-white">
         <section className="relative flex flex-col items-center justify-center min-h-[60vh] bg-gradient-to-br from-[#E8C39E] to-[#009D71] rounded-xl shadow-lg mb-10">
-              <img
-                src="/logo/banner1.png"
-                alt="Sabores del Jardín"
-                className="absolute inset-0 w-full h-full object-cover opacity-30 rounded-xl"
-              />
+                <Image
+                  src="/logo/banner1.png"
+                  alt="Sabores del Jardín"
+                  className="absolute inset-0 w-full h-full object-cover opacity-30 rounded-xl"
+                  width={1920}
+                  height={600}
+                  priority
+                />
               <div className="relative z-10 text-center py-16">
                 <h1 className="text-5xl font-extrabold text-[#009D71] mb-4 drop-shadow-lg">Sabores del Jardín</h1>
                 <p className="text-xl text-white mb-6">Lo mejor de Tucumán, directo a tu mesa.</p>
@@ -128,25 +132,25 @@ export default function Home() {
         <section className="max-w-4xl mx-auto mb-12">
               <h2 className="text-3xl font-bold text-[#009D71] mb-4">Tradición y Pasión por lo Nuestro</h2>
               <p className="text-lg text-[#808080] mb-4">Apoyamos a productores locales y artesanos, garantizando autenticidad y calidad en cada producto.</p>
-              <img src="/logo/agricultores2.jpg" alt="Productor local" className="w-full h-64 object-cover rounded-xl shadow" />
+                <Image src="/logo/agricultores2.jpg" alt="Productor local" className="w-full h-64 object-cover rounded-xl shadow" width={1200} height={256} />
         </section>
         <section className="max-w-5xl mx-auto mb-12">
               <h2 className="text-2xl font-bold text-[#009D71] mb-6">Explora Nuestros Productos</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="border-2 border-[#E8C39E] rounded-xl shadow p-6 flex flex-col items-center bg-transparent">
-                  <img src="/productos/saboresproductos1.png" alt="Delicias Gastronómicas" className="w-24 h-24 object-cover rounded mb-2" />
+                    <Image src="/productos/saboresproductos1.png" alt="Delicias Gastronómicas" className="w-24 h-24 object-cover rounded mb-2" width={96} height={96} />
                   <h3 className="text-lg font-semibold text-[#009D71] mb-1">Delicias Gastronómicas</h3>
                   <p className="text-[#808080] mb-2">Empanadas, miel, quesillo y más.</p>
                   <Button className="bg-[#009D71] text-white hover:bg-[#00805a]" onClick={() => window.location.href = '/productos'}>Ver más</Button>
                 </div>
                 <div className="border-2 border-[#E8C39E] rounded-xl shadow p-6 flex flex-col items-center bg-transparent">
-                  <img src="/productos/saboresproductos2.png" alt="Artesanías con Alma" className="w-24 h-24 object-cover rounded mb-2" />
+                    <Image src="/productos/saboresproductos2.png" alt="Artesanías con Alma" className="w-24 h-24 object-cover rounded mb-2" width={96} height={96} />
                   <h3 className="text-lg font-semibold text-[#009D71] mb-1">Artesanías con Alma</h3>
                   <p className="text-[#808080] mb-2">Cerámica, textil y arte local.</p>
                   <Button className="bg-[#009D71] text-white hover:bg-[#00805a]" onClick={() => window.location.href = '/productos'}>Ver más</Button>
                 </div>
                 <div className="border-2 border-[#E8C39E] rounded-xl shadow p-6 flex flex-col items-center bg-transparent">
-                  <img src="/productos/saboresproductos3.png" alt="Bebidas Regionales" className="w-24 h-24 object-cover rounded mb-2" />
+                    <Image src="/productos/saboresproductos3.png" alt="Bebidas Regionales" className="w-24 h-24 object-cover rounded mb-2" width={96} height={96} />
                   <h3 className="text-lg font-semibold text-[#009D71] mb-1">Bebidas Regionales</h3>
                   <p className="text-[#808080] mb-2">Vinos, licores y cervezas locales.</p>
                   <Button className="bg-[#009D71] text-white hover:bg-[#00805a]" onClick={() => window.location.href = '/productos'}>Ver más</Button>
@@ -158,11 +162,13 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {productosFavoritos.map((producto) => (
               <div key={producto.id} className="group border-2 border-[#E8C39E] rounded-lg shadow p-4 flex flex-col items-center bg-transparent transition hover:scale-[1.03]">
-                <img
-                  alt={producto.descripcion}
-                  src={producto.imagen}
-                  className="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8 mb-2"
-                />
+                  <Image
+                    alt={producto.descripcion}
+                    src={producto.imagen}
+                    className="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8 mb-2"
+                    width={200}
+                    height={200}
+                  />
                 <h3 className="mt-2 text-base font-semibold text-[#009D71]">{producto.nombre}</h3>
                 <p className="mt-1 text-lg font-bold text-[#808080]">${producto.precio.toLocaleString()}</p>
                 <Button 
@@ -179,17 +185,17 @@ export default function Home() {
           <h2 className="text-2xl font-bold text-[#009D71] mb-6">El Sello de Nuestros Sabores</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white border-2 border-[#E8C39E] rounded-xl shadow p-6 flex flex-col items-center">
-              <img src="/logo/seedling(1).svg" alt="Productores Tucumanos" className="w-14 h-14 mb-2" />
+                <Image src="/logo/seedling(1).svg" alt="Productores Tucumanos" className="w-14 h-14 mb-2" width={56} height={56} />
               <h3 className="text-lg font-semibold text-[#009D71] mb-1">Productores Tucumanos</h3>
               <p className="text-[#808080] mb-2">Apoyamos la economía local y el trabajo artesanal.</p>
             </div>
             <div className="bg-white border-2 border-[#E8C39E] rounded-xl shadow p-6 flex flex-col items-center">
-              <img src="/logo/award(1).svg" alt="Calidad Garantizada" className="w-14 h-14 mb-2" />
+                <Image src="/logo/award(1).svg" alt="Calidad Garantizada" className="w-14 h-14 mb-2" width={56} height={56} />
               <h3 className="text-lg font-semibold text-[#009D71] mb-1">Calidad Garantizada</h3>
               <p className="text-[#808080] mb-2">Productos frescos y elaborados con las mejores materias primas.</p>
             </div>
             <div className="bg-white border-2 border-[#E8C39E] rounded-xl shadow p-6 flex flex-col items-center">
-              <img src="/logo/truck(1).svg" alt="Directo a tu Hogar" className="w-14 h-14 mb-2" />
+                <Image src="/logo/truck(1).svg" alt="Directo a tu Hogar" className="w-14 h-14 mb-2" width={56} height={56} />
               <h3 className="text-lg font-semibold text-[#009D71] mb-1">Directo a tu Hogar</h3>
               <p className="text-[#808080] mb-2">Llevamos lo mejor de Tucumán a todo el país.</p>
             </div>
@@ -218,7 +224,7 @@ export default function Home() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4 text-sm">
                 {productosDelPack.map((producto) => (
                   <div key={producto.id} className="flex flex-col items-center">
-                    <img src={producto.imagen} alt={producto.nombre} className="w-12 h-12 object-cover rounded-lg mb-1" />
+                      <Image src={producto.imagen} alt={producto.nombre} className="w-12 h-12 object-cover rounded-lg mb-1" width={48} height={48} />
                     <span className="text-center font-medium text-gray-700">{producto.nombre}</span>
                   </div>
                 ))}

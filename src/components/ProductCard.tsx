@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from "next/image";
 import { useAddToCart } from './CartComponents';
 
 interface ProductCardProps {
@@ -25,7 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, nombre, descripcion, prec
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-2 border-[#E8C39E] hover:shadow-xl transition-shadow">
-      <img src={imagen} alt={nombre} className="w-32 h-32 object-cover rounded-lg mb-4" />
+      <Image src={imagen} alt={nombre} className="w-32 h-32 object-cover rounded-lg mb-4" width={128} height={128} />
       <span className="text-xs bg-[#E8C39E] text-[#009D71] px-2 py-1 rounded-full mb-2 font-medium">
         {categoria}
       </span>

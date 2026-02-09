@@ -139,10 +139,10 @@ export default function Contacto() {
                   Síguenos en Redes Sociales
                 </h3>
                 <div className="flex space-x-4">
-                  <Button className="bg-blue-600 text-white hover:bg-blue-700">
+                  <Button className="bg-green-600 text-white hover:bg-green-700">
                     Facebook
                   </Button>
-                  <Button className="bg-pink-600 text-white hover:bg-pink-700">
+                  <Button className="bg-green-600 text-white hover:bg-green-700">
                     Instagram
                   </Button>
                   <Button className="bg-green-600 text-white hover:bg-green-700">
